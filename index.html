@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday Shraddha</title>
+    <style>
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            color: #fff;
+            background:
+                radial-gradient(1100px 650px at 20% 10%, rgba(255, 80, 160, .35), transparent 60%),
+                radial-gradient(900px 520px at 85% 20%, rgba(90, 180, 255, .35), transparent 55%),
+                radial-gradient(900px 650px at 50% 90%, rgba(255, 200, 90, .22), transparent 60%),
+                linear-gradient(135deg, #070713, #0b0b1a 55%, #070713);
+        }
+
+        /* soft moving glow */
+        .glow {
+            position: absolute;
+            inset: -30%;
+            background: conic-gradient(from 0deg,
+                    rgba(255, 90, 170, .22),
+                    rgba(120, 90, 255, .18),
+                    rgba(90, 210, 255, .18),
+                    rgba(255, 210, 90, .16),
+                    rgba(255, 90, 170, .22));
+            filter: blur(80px);
+            opacity: .9;
+            animation: spin 18s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* floating particles */
+        .spark {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .85);
+            filter: blur(.2px);
+            opacity: .55;
+            animation: floatUp var(--t) linear infinite;
+            left: var(--x);
+            bottom: -30px;
+            transform: translateY(0);
+            box-shadow:
+                0 0 12px rgba(255, 255, 255, .35),
+                0 0 30px rgba(255, 170, 220, .18);
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(.9)
+            }
+
+            100% {
+                transform: translateY(-120vh) scale(1.25)
+            }
+        }
+
+        /* main card */
+        .wrap {
+            position: relative;
+            width: min(980px, 92vw);
+            padding: 22px;
+        }
+
+        .card {
+            position: relative;
+            border-radius: 28px;
+            padding: 44px 34px;
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .14);
+            box-shadow:
+                0 18px 60px rgba(0, 0, 0, .45),
+                inset 0 1px 0 rgba(255, 255, 255, .10);
+            backdrop-filter: blur(14px);
+            overflow: hidden;
+        }
+
+        .card:before {
+            content: "";
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(120deg,
+                    rgba(255, 90, 170, .35),
+                    rgba(90, 210, 255, .22),
+                    rgba(255, 210, 90, .25),
+                    rgba(120, 90, 255, .25));
+            opacity: .35;
+            filter: blur(18px);
+            transform: translateY(0);
+            animation: pulse 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: .28;
+                transform: translateY(-6px)
+            }
+
+            50% {
+                opacity: .42;
+                transform: translateY(6px)
+            }
+        }
+
+        .content {
+            position: relative;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .26);
+            border: 1px solid rgba(255, 255, 255, .16);
+            font-size: 13px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .86);
+        }
+
+        .title {
+            margin: 18px 0 10px;
+            font-size: clamp(34px, 6vw, 62px);
+            line-height: 1.05;
+            letter-spacing: .04em;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: linear-gradient(90deg,
+                    rgba(255, 255, 255, .95),
+                    rgba(255, 190, 230, .92),
+                    rgba(180, 235, 255, .90),
+                    rgba(255, 230, 170, .92));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 10px 40px rgba(0, 0, 0, .35);
+        }
+
+        .name {
+            margin: 0;
+            font-size: clamp(16px, 2.4vw, 20px);
+            color: rgba(255, 255, 255, .84);
+            letter-spacing: .06em;
+        }
+
+        .divider {
+            width: min(520px, 84%);
+            height: 1px;
+            margin: 22px auto;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
+        }
+
+        .msg {
+            margin: 0 auto;
+            width: min(720px, 92%);
+            font-size: clamp(14px, 2vw, 18px);
+            line-height: 1.7;
+            color: rgba(255, 255, 255, .80);
+        }
+
+        .actions {
+            margin-top: 26px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: 0;
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #0b0b1a;
+            background: linear-gradient(90deg, rgba(255, 210, 90, .95), rgba(255, 110, 190, .95));
+            box-shadow: 0 14px 30px rgba(0, 0, 0, .35);
+            transition: transform .18s ease, filter .18s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05)
+        }
+
+        .btn:active {
+            transform: translateY(0px);
+            filter: brightness(.98)
+        }
+
+        .ghost {
+            border-radius: 14px;
+            padding: 12px 16px;
+            font-weight: 700;
+            cursor: pointer;
+            color: rgba(255, 255, 255, .88);
+            background: rgba(255, 255, 255, .06);
+            border: 1px solid rgba(255, 255, 255, .16);
+            box-shadow: 0 14px 30px rgba(0, 0, 0, .25);
+            transition: transform .18s ease, background .18s ease;
+        }
+
+        .ghost:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, .09)
+        }
+
+        .ghost:active {
+            transform: translateY(0px)
+        }
+
+        /* confetti canvas */
+        canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        /* tiny footer */
+        .foot {
+            margin-top: 18px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, .55);
+            letter-spacing: .06em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glow"></div>
+
+    <!-- sparkles (pure CSS, lightweight) -->
+    <div class="spark" style="--x:6%;  --t:9s;"></div>
+    <div class="spark" style="--x:14%; --t:11s;"></div>
+    <div class="spark" style="--x:22%; --t:10s;"></div>
+    <div class="spark" style="--x:33%; --t:12s;"></div>
+    <div class="spark" style="--x:44%; --t:8s;"></div>
+    <div class="spark" style="--x:56%; --t:13s;"></div>
+    <div class="spark" style="--x:67%; --t:9.5s;"></div>
+    <div class="spark" style="--x:78%; --t:12.5s;"></div>
+    <div class="spark" style="--x:90%; --t:10.5s;"></div>
+
+    <div class="wrap">
+        <div class="card">
+            <canvas id="confetti"></canvas>
+
+            <div class="content">
+                <div class="badge">✨ Special Day • Big Smiles</div>
+
+                <h1 class="title">HAPPY BIRTHDAY SHRADDHA</h1>
+                <p class="name">Wishing you a day full of light, laughter, and lovely surprises 🎂</p>
+
+                <div class="divider"></div>
+
+                <p class="msg">
+                    May your year be packed with wins, warm moments, and new adventures.
+                    Keep shining the way you do, and let today be extra magical ✨
+                </p>
+
+                <div class="actions">
+                    <button class="btn" id="pop">Pop Confetti 🎉</button>
+                    <button class="ghost" id="toggle">Toggle Glow ✨</button>
+                </div>
+
+                <div class="foot">Made with good vibes and a tiny bit of sparkle.</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Confetti (lightweight canvas)
+        const canvas = document.getElementById("confetti");
+        const ctx = canvas.getContext("2d");
+
+        function resize() {
+            const card = canvas.parentElement;
+            canvas.width = card.clientWidth * devicePixelRatio;
+            canvas.height = card.clientHeight * devicePixelRatio;
+            canvas.style.width = card.clientWidth + "px";
+            canvas.style.height = card.clientHeight + "px";
+            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        let pieces = [];
+        let running = false;
+
+        function rand(min, max) { return Math.random() * (max - min) + min; }
+
+        function burst() {
+            const w = canvas.clientWidth;
+            const h = canvas.clientHeight;
+
+            for (let i = 0; i < 140; i++) {
+                pieces.push({
+                    x: w / 2 + rand(-40, 40),
+                    y: h / 2 + rand(-20, 20),
+                    vx: rand(-6, 6),
+                    vy: rand(-10, -3),
+                    g: rand(0.18, 0.35),
+                    r: rand(2, 4.2),
+                    rot: rand(0, Math.PI * 2),
+                    vr: rand(-0.2, 0.2),
+                    life: rand(70, 110),
+                    hue: rand(0, 360)
+                });
+            }
+            if (!running) {
+                running = true;
+                requestAnimationFrame(tick);
+            }
+        }
+
+        function tick() {
+            const w = canvas.clientWidth;
+            const h = canvas.clientHeight;
+            ctx.clearRect(0, 0, w, h);
+
+            pieces = pieces.filter(p => p.life > 0);
+            for (const p of pieces) {
+                p.life--;
+                p.vy += p.g;
+                p.x += p.vx;
+                p.y += p.vy;
+                p.rot += p.vr;
+
+                // draw
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rot);
+                ctx.fillStyle = `hsla(${p.hue}, 95%, 65%, 0.95)`;
+                ctx.beginPath();
+                ctx.roundRect(-p.r, -p.r * 1.6, p.r * 2, p.r * 3.2, 3);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            if (pieces.length > 0) {
+                requestAnimationFrame(tick);
+            } else {
+                running = false;
+            }
+        }
+
+        // roundRect polyfill for older browsers
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+                r = Math.min(r, w / 2, h / 2);
+                this.moveTo(x + r, y);
+                this.arcTo(x + w, y, x + w, y + h, r);
+                this.arcTo(x + w, y + h, x, y + h, r);
+                this.arcTo(x, y + h, x, y, r);
+                this.arcTo(x, y, x + w, y, r);
+                this.closePath();
+                return this;
+            };
+        }
+
+        document.getElementById("pop").addEventListener("click", burst);
+
+        // auto mini burst on load
+        setTimeout(burst, 700);
+
+        // toggle glow
+        const glow = document.querySelector(".glow");
+        document.getElementById("toggle").addEventListener("click", () => {
+            glow.style.display = (glow.style.display === "none") ? "block" : "none";
+        });
+    </script>
+</body>
+
+</html>
