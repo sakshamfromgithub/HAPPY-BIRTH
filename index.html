@@ -1,405 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="hi">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Satyam Singh Yadav</title>
-    <style>
-        * {
-            box-sizing: border-box
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-            color: #fff;
-            background:
-                radial-gradient(1100px 650px at 20% 10%, rgba(255, 80, 160, .35), transparent 60%),
-                radial-gradient(900px 520px at 85% 20%, rgba(90, 180, 255, .35), transparent 55%),
-                radial-gradient(900px 650px at 50% 90%, rgba(255, 200, 90, .22), transparent 60%),
-                linear-gradient(135deg, #070713, #0b0b1a 55%, #070713);
-        }
-
-        /* soft moving glow */
-        .glow {
-            position: absolute;
-            inset: -30%;
-            background: conic-gradient(from 0deg,
-                    rgba(255, 90, 170, .22),
-                    rgba(120, 90, 255, .18),
-                    rgba(90, 210, 255, .18),
-                    rgba(255, 210, 90, .16),
-                    rgba(255, 90, 170, .22));
-            filter: blur(80px);
-            opacity: .9;
-            animation: spin 18s linear infinite;
-            pointer-events: none;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg)
-            }
-        }
-
-        /* floating particles */
-        .spark {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            border-radius: 999px;
-            background: rgba(255, 255, 255, .85);
-            filter: blur(.2px);
-            opacity: .55;
-            animation: floatUp var(--t) linear infinite;
-            left: var(--x);
-            bottom: -30px;
-            transform: translateY(0);
-            box-shadow:
-                0 0 12px rgba(255, 255, 255, .35),
-                0 0 30px rgba(255, 170, 220, .18);
-            pointer-events: none;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(0) scale(.9)
-            }
-
-            100% {
-                transform: translateY(-120vh) scale(1.25)
-            }
-        }
-
-        /* main card */
-        .wrap {
-            position: relative;
-            width: min(980px, 92vw);
-            padding: 22px;
-        }
-
-        .card {
-            position: relative;
-            border-radius: 28px;
-            padding: 44px 34px;
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .14);
-            box-shadow:
-                0 18px 60px rgba(0, 0, 0, .45),
-                inset 0 1px 0 rgba(255, 255, 255, .10);
-            backdrop-filter: blur(14px);
-            overflow: hidden;
-        }
-
-        .card:before {
-            content: "";
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(120deg,
-                    rgba(255, 90, 170, .35),
-                    rgba(90, 210, 255, .22),
-                    rgba(255, 210, 90, .25),
-                    rgba(120, 90, 255, .25));
-            opacity: .35;
-            filter: blur(18px);
-            transform: translateY(0);
-            animation: pulse 6s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                opacity: .28;
-                transform: translateY(-6px)
-            }
-
-            50% {
-                opacity: .42;
-                transform: translateY(6px)
-            }
-        }
-
-        .content {
-            position: relative;
-            text-align: center;
-            z-index: 2;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 10px 14px;
-            border-radius: 999px;
-            background: rgba(0, 0, 0, .26);
-            border: 1px solid rgba(255, 255, 255, .16);
-            font-size: 13px;
-            letter-spacing: .12em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .86);
-        }
-
-        .title {
-            margin: 18px 0 10px;
-            font-size: clamp(34px, 6vw, 62px);
-            line-height: 1.05;
-            letter-spacing: .04em;
-            font-weight: 800;
-            text-transform: uppercase;
-            background: linear-gradient(90deg,
-                    rgba(255, 255, 255, .95),
-                    rgba(255, 190, 230, .92),
-                    rgba(180, 235, 255, .90),
-                    rgba(255, 230, 170, .92));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 10px 40px rgba(0, 0, 0, .35);
-        }
-
-        .name {
-            margin: 0;
-            font-size: clamp(16px, 2.4vw, 20px);
-            color: rgba(255, 255, 255, .84);
-            letter-spacing: .06em;
-        }
-
-        .divider {
-            width: min(520px, 84%);
-            height: 1px;
-            margin: 22px auto;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .28), transparent);
-        }
-
-        .msg {
-            margin: 0 auto;
-            width: min(720px, 92%);
-            font-size: clamp(14px, 2vw, 18px);
-            line-height: 1.7;
-            color: rgba(255, 255, 255, .80);
-        }
-
-        .actions {
-            margin-top: 26px;
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            border: 0;
-            border-radius: 14px;
-            padding: 12px 16px;
-            font-weight: 700;
-            cursor: pointer;
-            color: #0b0b1a;
-            background: linear-gradient(90deg, rgba(255, 210, 90, .95), rgba(255, 110, 190, .95));
-            box-shadow: 0 14px 30px rgba(0, 0, 0, .35);
-            transition: transform .18s ease, filter .18s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            filter: brightness(1.05)
-        }
-
-        .btn:active {
-            transform: translateY(0px);
-            filter: brightness(.98)
-        }
-
-        .ghost {
-            border-radius: 14px;
-            padding: 12px 16px;
-            font-weight: 700;
-            cursor: pointer;
-            color: rgba(255, 255, 255, .88);
-            background: rgba(255, 255, 255, .06);
-            border: 1px solid rgba(255, 255, 255, .16);
-            box-shadow: 0 14px 30px rgba(0, 0, 0, .25);
-            transition: transform .18s ease, background .18s ease;
-        }
-
-        .ghost:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, .09)
-        }
-
-        .ghost:active {
-            transform: translateY(0px)
-        }
-
-        /* confetti canvas */
-        canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        /* tiny footer */
-        .foot {
-            margin-top: 18px;
-            font-size: 12px;
-            color: rgba(255, 255, 255, .55);
-            letter-spacing: .06em;
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Welcome Satyam Singh Yadav | Code Neurons</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: dark;
+  --bg:#070b1d; --ink:#eef1ff; --muted:#8e98c9;
+  --cyan:#3de8ff; --pink:#ff4fa3; --gold:#ffc83d; --violet:#7b5cff;
+  --head:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --mono:"Fira Code",ui-monospace,Menlo,Consolas,monospace;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+body{background:radial-gradient(120% 90% at 70% 10%,#14194a 0%,var(--bg) 60%);color:var(--ink);font-family:var(--head);overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+.wrap{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:22px clamp(18px,5vw,64px) clamp(24px,6vh,56px);pointer-events:none}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.05rem;letter-spacing:.01em}
+.dot{width:12px;height:12px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan)}
+main{max-width:900px}
+h1{margin:0 0 .3em;font-weight:800;font-size:clamp(2.6rem,9.5vw,7rem);line-height:.95;letter-spacing:-.03em;
+  background:linear-gradient(100deg,var(--ink) 30%,var(--cyan) 65%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:clamp(1.05rem,2.6vw,1.6rem);font-weight:500;margin:0 0 1.4em;max-width:30ch;color:var(--ink)}
+.term{display:inline-block;font-family:var(--mono);font-size:clamp(.78rem,2vw,.95rem);color:var(--cyan);background:rgba(10,14,40,.72);border:1px solid rgba(61,232,255,.35);border-radius:10px;padding:12px 16px;margin-bottom:1.4em;max-width:100%;overflow-x:auto}
+.term .c{color:var(--muted)} .term .g{color:var(--gold)} .term .p{color:var(--pink)}
+.cur{display:inline-block;width:.55em;height:1.05em;background:var(--cyan);vertical-align:-2px;animation:b 1s steps(2) infinite}
+@keyframes b{50%{opacity:0}}
+button{pointer-events:auto;font:800 1rem var(--head);color:#1a1200;background:var(--gold);border:0;border-radius:999px;padding:14px 26px;cursor:pointer;box-shadow:0 8px 30px rgba(255,200,61,.35);transition:transform .15s}
+button:hover{transform:scale(1.05)} button:active{transform:scale(.97)}
+button:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+.hint{font-size:.85rem;color:var(--muted);margin:14px 0 0}
+@media (prefers-reduced-motion:reduce){.cur{animation:none}}
+</style>
 </head>
-
 <body>
-    <div class="glow"></div>
-
-    <!-- sparkles (pure CSS, lightweight) -->
-    <div class="spark" style="--x:6%;  --t:9s;"></div>
-    <div class="spark" style="--x:14%; --t:11s;"></div>
-    <div class="spark" style="--x:22%; --t:10s;"></div>
-    <div class="spark" style="--x:33%; --t:12s;"></div>
-    <div class="spark" style="--x:44%; --t:8s;"></div>
-    <div class="spark" style="--x:56%; --t:13s;"></div>
-    <div class="spark" style="--x:67%; --t:9.5s;"></div>
-    <div class="spark" style="--x:78%; --t:12.5s;"></div>
-    <div class="spark" style="--x:90%; --t:10.5s;"></div>
-
-    <div class="wrap">
-        <div class="card">
-            <canvas id="confetti"></canvas>
-
-            <div class="content">
-                <div class="badge">✨ Special Day • Big Smiles</div>
-
-                <h1 class="title">Satyam Singh Yadav</h1>
-                <p class="name">Congrats to Join <b>TEAM - CODE NEURONS</b></p>
-
-                <div class="divider"></div>
-
-                <p class="msg">
-                    May your year be packed with wins, warm moments, and new adventures.
-                    Keep shining the way you do, and let today be extra magical ✨
-                </p>
-
-                <div class="actions">
-                    <button class="btn" id="pop">Pop Confetti 🎉</button>
-                    <button class="ghost" id="toggle">Toggle Glow ✨</button>
-                </div>
-
-                <div class="foot">Made with good vibes and a tiny bit of sparkle.</div>
-            </div>
-        </div>
+<canvas id="c" aria-hidden="true"></canvas>
+<div class="wrap">
+  <div class="brand"><span class="dot"></span>Code Neurons</div>
+  <main>
+    <h1>Satyam Singh Yadav</h1>
+    <p class="sub">Code Neurons family mein aapka swagat hai! 🎉</p>
+    <div class="term" role="status">
+      <span class="c">// naya neuron, naya connection</span><br>
+      team.<span class="g">join</span>(<span class="p">"Satyam Singh Yadav"</span>);<br>
+      <span id="status">connecting...</span><span class="cur"></span>
     </div>
+    <div><button id="again" type="button">Phir se celebrate karo 🚀</button></div>
+    <p class="hint">Screen par kahin bhi tap karo, confetti phategi.</p>
+  </main>
+</div>
+<script>
+(function(){
+  var cv=document.getElementById('c'),ctx=cv.getContext('2d'),W,H,dpr=Math.min(window.devicePixelRatio||1,2);
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nodes=[],parts=[],rings=[],S={x:0,y:0,tx:0,ty:0,arrived:false,links:[]};
+  var cols=['#3de8ff','#ff4fa3','#ffc83d','#7b5cff','#6dff9c','#ffffff'];
+  var status=document.getElementById('status');
 
-    <script>
-        // Confetti (lightweight canvas)
-        const canvas = document.getElementById("confetti");
-        const ctx = canvas.getContext("2d");
-
-        function resize() {
-            const card = canvas.parentElement;
-            canvas.width = card.clientWidth * devicePixelRatio;
-            canvas.height = card.clientHeight * devicePixelRatio;
-            canvas.style.width = card.clientWidth + "px";
-            canvas.style.height = card.clientHeight + "px";
-            ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
-        }
-        window.addEventListener("resize", resize);
-        resize();
-
-        let pieces = [];
-        let running = false;
-
-        function rand(min, max) { return Math.random() * (max - min) + min; }
-
-        function burst() {
-            const w = canvas.clientWidth;
-            const h = canvas.clientHeight;
-
-            for (let i = 0; i < 140; i++) {
-                pieces.push({
-                    x: w / 2 + rand(-40, 40),
-                    y: h / 2 + rand(-20, 20),
-                    vx: rand(-6, 6),
-                    vy: rand(-10, -3),
-                    g: rand(0.18, 0.35),
-                    r: rand(2, 4.2),
-                    rot: rand(0, Math.PI * 2),
-                    vr: rand(-0.2, 0.2),
-                    life: rand(70, 110),
-                    hue: rand(0, 360)
-                });
-            }
-            if (!running) {
-                running = true;
-                requestAnimationFrame(tick);
-            }
-        }
-
-        function tick() {
-            const w = canvas.clientWidth;
-            const h = canvas.clientHeight;
-            ctx.clearRect(0, 0, w, h);
-
-            pieces = pieces.filter(p => p.life > 0);
-            for (const p of pieces) {
-                p.life--;
-                p.vy += p.g;
-                p.x += p.vx;
-                p.y += p.vy;
-                p.rot += p.vr;
-
-                // draw
-                ctx.save();
-                ctx.translate(p.x, p.y);
-                ctx.rotate(p.rot);
-                ctx.fillStyle = `hsla(${p.hue}, 95%, 65%, 0.95)`;
-                ctx.beginPath();
-                ctx.roundRect(-p.r, -p.r * 1.6, p.r * 2, p.r * 3.2, 3);
-                ctx.fill();
-                ctx.restore();
-            }
-
-            if (pieces.length > 0) {
-                requestAnimationFrame(tick);
-            } else {
-                running = false;
-            }
-        }
-
-        // roundRect polyfill for older browsers
-        if (!CanvasRenderingContext2D.prototype.roundRect) {
-            CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
-                r = Math.min(r, w / 2, h / 2);
-                this.moveTo(x + r, y);
-                this.arcTo(x + w, y, x + w, y + h, r);
-                this.arcTo(x + w, y + h, x, y + h, r);
-                this.arcTo(x, y + h, x, y, r);
-                this.arcTo(x, y, x + w, y, r);
-                this.closePath();
-                return this;
-            };
-        }
-
-        document.getElementById("pop").addEventListener("click", burst);
-
-        // auto mini burst on load
-        setTimeout(burst, 700);
-
-        // toggle glow
-        const glow = document.querySelector(".glow");
-        document.getElementById("toggle").addEventListener("click", () => {
-            glow.style.display = (glow.style.display === "none") ? "block" : "none";
-        });
-    </script>
+  function size(){
+    W=innerWidth;H=innerHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.min(70,W*H/16000));
+    nodes=[];
+    for(var i=0;i<n;i++)nodes.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35});
+    S.tx=W<700?W*.5:W*.72;S.ty=H*(W<700?.3:.36);
+    if(!S.arrived){S.x=-60;S.y=S.ty+H*.25}else{S.x=S.tx;S.y=S.ty;link()}
+  }
+  function link(){
+    S.links=nodes.map(function(n){return{n:n,d:Math.hypot(n.x-S.tx,n.y-S.ty)}})
+      .sort(function(a,b){return a.d-b.d}).slice(0,Math.min(9,nodes.length)).map(function(o){return o.n});
+  }
+  function burst(x,y,count){
+    for(var i=0;i<count;i++){
+      var a=Math.random()*Math.PI*2,v=3+Math.random()*9;
+      parts.push({x:x,y:y,vx:Math.cos(a)*v,vy:Math.sin(a)*v-4,w:5+Math.random()*7,h:3+Math.random()*5,
+        r:Math.random()*6,vr:(Math.random()-.5)*.4,c:cols[(Math.random()*cols.length)|0],life:1});
+    }
+    rings.push({x:x,y:y,r:10,a:1});
+  }
+  function celebrate(){
+    burst(S.x,S.y,reduce?30:140);
+    if(!reduce){
+      setTimeout(function(){burst(W*.2,H*.3,60)},200);
+      setTimeout(function(){burst(W*.85,H*.55,60)},400);
+      setTimeout(function(){burst(W*.5,H*.15,60)},600);
+    }
+  }
+  function arrive(){
+    S.arrived=true;link();celebrate();
+    status.innerHTML='<span class="g">status:</span> connected ✓ (' + S.links.length + ' neurons se judh gaye)';
+  }
+  var t0=performance.now();
+  function frame(t){
+    var tt=(t-t0)/1000;
+    ctx.clearRect(0,0,W,H);
+    // drift nodes
+    for(var i=0;i<nodes.length;i++){var n=nodes[i];
+      if(!reduce){n.x+=n.vx;n.y+=n.vy;}
+      if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;}
+    // team edges
+    ctx.lineWidth=1;
+    for(var i=0;i<nodes.length;i++)for(var j=i+1;j<nodes.length;j++){
+      var d=Math.hypot(nodes[i].x-nodes[j].x,nodes[i].y-nodes[j].y);
+      if(d<130){ctx.strokeStyle='rgba(123,92,255,'+(.35*(1-d/130))+')';
+        ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();}
+    }
+    nodes.forEach(function(n){ctx.fillStyle='rgba(143,160,255,.8)';ctx.beginPath();ctx.arc(n.x,n.y,2.4,0,7);ctx.fill();});
+    // Satyam node
+    if(!S.arrived){
+      S.x+=(S.tx-S.x)*(reduce?.2:.028);S.y+=(S.ty-S.y)*(reduce?.2:.028);
+      if(Math.hypot(S.tx-S.x,S.ty-S.y)<3){S.x=S.tx;S.y=S.ty;arrive();}
+    }
+    if(S.arrived){
+      S.links.forEach(function(n,k){
+        ctx.strokeStyle='rgba(255,200,61,.75)';ctx.lineWidth=1.6;
+        ctx.beginPath();ctx.moveTo(S.x,S.y);ctx.lineTo(n.x,n.y);ctx.stroke();
+        var p=((tt*.5+k*.13)%1);
+        ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(S.x+(n.x-S.x)*p,S.y+(n.y-S.y)*p,2.6,0,7);ctx.fill();
+        ctx.fillStyle='#ffc83d';ctx.beginPath();ctx.arc(n.x,n.y,4,0,7);ctx.fill();
+      });
+    }
+    var pulse=1+(reduce?0:Math.sin(tt*3)*.12);
+    var g=ctx.createRadialGradient(S.x,S.y,0,S.x,S.y,60*pulse);
+    g.addColorStop(0,'rgba(255,200,61,.95)');g.addColorStop(.35,'rgba(255,79,163,.45)');g.addColorStop(1,'rgba(255,79,163,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(S.x,S.y,60*pulse,0,7);ctx.fill();
+    ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(S.x,S.y,8,0,7);ctx.fill();
+    ctx.font='700 14px "Fira Code",monospace';ctx.textAlign='center';ctx.fillStyle='#ffc83d';
+    ctx.fillText('Satyam',S.x,S.y-26);
+    // rings
+    for(var i=rings.length-1;i>=0;i--){var r=rings[i];r.r+=7;r.a-=.018;
+      if(r.a<=0){rings.splice(i,1);continue}
+      ctx.strokeStyle='rgba(61,232,255,'+r.a+')';ctx.lineWidth=2;ctx.beginPath();ctx.arc(r.x,r.y,r.r,0,7);ctx.stroke();}
+    // confetti
+    for(var i=parts.length-1;i>=0;i--){var p=parts[i];
+      p.vy+=.22;p.vx*=.992;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life-=.005;
+      if(p.life<=0||p.y>H+20){parts.splice(i,1);continue}
+      ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.globalAlpha=Math.min(1,p.life*2);
+      ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();}
+    requestAnimationFrame(frame);
+  }
+  addEventListener('resize',size);
+  cv.addEventListener('pointerdown',function(e){burst(e.clientX,e.clientY,70)});
+  document.body.addEventListener('pointerdown',function(e){if(e.target.id!=='again')burst(e.clientX,e.clientY,70)});
+  document.getElementById('again').addEventListener('click',celebrate);
+  size();requestAnimationFrame(frame);
+})();
+</script>
 </body>
-
 </html>
